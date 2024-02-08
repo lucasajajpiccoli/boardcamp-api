@@ -2,6 +2,8 @@ package com.boardcampapi.api.models;
 
 import java.time.LocalDate;
 
+import com.boardcampapi.api.dtos.RentalDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +22,22 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "rentals")
 public class RentalModel {
+
+    public RentalModel(
+        LocalDate rentDate,
+        Long daysRented,
+        Long originalPrice,
+        Long delayFee,
+        CustomerModel customer,
+        GameModel game
+    ) {
+        this.rentDate = rentDate;
+        this.daysRented = daysRented;
+        this.originalPrice = originalPrice;
+        this.delayFee = delayFee;
+        this.customer = customer;
+        this.game = game;
+    }
     
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

@@ -22,5 +22,15 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleCustomerCpfConflict(CustomerCpfConflictException exception) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
     }
+
+    @ExceptionHandler({ GameNotFoundException.class })
+    public ResponseEntity<String> handleGameNotFound(GameNotFoundException exception) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+    }
+    
+    @ExceptionHandler({ UnprocessableRentalException.class })
+    public ResponseEntity<String> handleUnprocessableRental(UnprocessableRentalException exception) {
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(exception.getMessage());
+    }
     
 }
