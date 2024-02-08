@@ -7,5 +7,5 @@ import com.boardcampapi.api.models.CustomerModel;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<CustomerModel, Long> {
-    
+    boolean existsByCpf(String cpf);
 }
