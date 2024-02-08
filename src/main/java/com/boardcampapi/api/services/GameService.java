@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.boardcampapi.api.dtos.GameDTO;
+import com.boardcampapi.api.exceptions.GameNameConflictException;
 import com.boardcampapi.api.models.GameModel;
 import com.boardcampapi.api.repositories.GameRepository;
 
@@ -20,4 +22,13 @@ public class GameService {
         return gameRepository.findAll();
     }
 
+    public GameModel save(GameDTO dto) {
+        if (gameRepository.existsByName(dto.getName())) {
+            throw new GameNameConflictException();
+        }
+
+        GameModel game = new GameModel(dto);
+        return gameRepository.save(game);
+    }
+    
 }
