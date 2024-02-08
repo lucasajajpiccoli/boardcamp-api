@@ -10,7 +10,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({ GameNameConflictException.class })
     public ResponseEntity<String> handleGameNameConflict(GameNameConflictException exception) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body("A game with this name already exists!");
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
     }
     
 }

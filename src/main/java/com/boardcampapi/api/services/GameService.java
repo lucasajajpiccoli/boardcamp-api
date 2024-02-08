@@ -24,7 +24,7 @@ public class GameService {
 
     public GameModel save(GameDTO dto) {
         if (gameRepository.existsByName(dto.getName())) {
-            throw new GameNameConflictException();
+            throw new GameNameConflictException("A game with this name already exists!");
         }
 
         GameModel game = new GameModel(dto);
