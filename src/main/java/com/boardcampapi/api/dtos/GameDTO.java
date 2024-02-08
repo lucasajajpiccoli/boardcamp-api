@@ -14,7 +14,7 @@ public class GameDTO {
 
     @NotBlank(message = "Field image cannot be null, empty or blank")
     @Pattern(
-        regexp="^https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)$",
+        regexp="^(https?:\\/\\/).*$",
         message = "Field image must be http:// or https:// URL"
     )
     private String image;
