@@ -1,6 +1,7 @@
 package com.boardcampapi.api.services;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.boardcampapi.api.dtos.RentalDTO;
 import com.boardcampapi.api.exceptions.CustomerNotFoundException;
 import com.boardcampapi.api.exceptions.GameNotFoundException;
+import com.boardcampapi.api.exceptions.RentalNotFoundException;
 import com.boardcampapi.api.exceptions.UnprocessableRentalException;
 import com.boardcampapi.api.models.CustomerModel;
 import com.boardcampapi.api.models.GameModel;
@@ -68,6 +70,30 @@ public class RentalService {
         if(openRentals >= stockTotal) {
             throw new UnprocessableRentalException("There is no available game in stock!");
         }
+
+        return rentalRepository.save(rental);
+    }
+
+    public RentalModel update(Long id) {
+        RentalModel rental = rentalRepository.findById(id).orElseThrow(
+            () -> new RentalNotFoundException("Rental not found!")
+        );
+
+        LocalDate returnDate = rental.getReturnDate();
+        if (returnDate != null) {
+            throw new UnprocessableRentalException("This rental is already closed!");
+        }
+
+        returnDate = LocalDate.now();
+        LocalDate rentDate = rental.getRentDate();
+        Long daysRented = rental.getDaysRented();
+        Long pricePerDay = rental.getGame().getPricePerDay();
+
+        Long delay = Math.max(0, rentDate.until(returnDate, ChronoUnit.DAYS) - daysRented);
+        Long delayFee = delay * pricePerDay;
+
+        rental.setReturnDate(returnDate);
+        rental.setDelayFee(delayFee);
 
         return rentalRepository.save(rental);
     }
