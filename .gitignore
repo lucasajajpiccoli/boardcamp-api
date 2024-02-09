@@ -34,3 +34,4 @@ build/
 
 ### Environement variables ###
 .env
+.env.test
