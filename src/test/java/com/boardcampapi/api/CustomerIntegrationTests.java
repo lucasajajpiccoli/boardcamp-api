@@ -8,11 +8,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.boardcampapi.api.dtos.CustomerDTO;
 import com.boardcampapi.api.models.CustomerModel;
 import com.boardcampapi.api.repositories.CustomerRepository;
 import com.boardcampapi.api.repositories.GameRepository;
@@ -71,16 +73,129 @@ class CustomerIntegrationTests {
         CustomerModel createdCustomer = customerRepository.save(customer);
 
         //when
-        ResponseEntity<String> response = restTemplate.exchange(
+        ResponseEntity<CustomerModel> response = restTemplate.exchange(
             "/customers/{id}",
             HttpMethod.GET,
             null,
-            String.class,
+            CustomerModel.class,
             createdCustomer.getId()
         );
 
         //then
         assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(1, customerRepository.count());
+    }
+
+    @Test
+    void givenCustomerWithCpfOfLength10_whenCreatingCustomer_thenThrowsError() {
+        //given
+        String name = "Customer";
+        String cpf = "1234567890";
+        CustomerDTO customer = new CustomerDTO(name, cpf);
+
+        HttpEntity<CustomerDTO> body = new HttpEntity<>(customer);
+
+        //when
+        ResponseEntity<String> response = restTemplate.exchange(
+            "/customers",
+            HttpMethod.POST,
+            body,
+            String.class
+        );
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(0, customerRepository.count());
+    }
+
+    @Test
+    void givenCustomerWithCpfOfLength12_whenCreatingCustomer_thenThrowsError() {
+        //given
+        String name = "Customer";
+        String cpf = "123456789012";
+        CustomerDTO customer = new CustomerDTO(name, cpf);
+
+        HttpEntity<CustomerDTO> body = new HttpEntity<>(customer);
+
+        //when
+        ResponseEntity<String> response = restTemplate.exchange(
+            "/customers",
+            HttpMethod.POST,
+            body,
+            String.class
+        );
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(0, customerRepository.count());
+    }
+
+    @Test
+    void givenCustomerWithInvalidName_whenCreatingCustomer_thenThrowsError() {
+        //given
+        String name = " ";
+        String cpf = "12345678901";
+        CustomerDTO customer = new CustomerDTO(name, cpf);
+
+        HttpEntity<CustomerDTO> body = new HttpEntity<>(customer);
+
+        //when
+        ResponseEntity<String> response = restTemplate.exchange(
+            "/customers",
+            HttpMethod.POST,
+            body,
+            String.class
+        );
+
+        //then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(0, customerRepository.count());
+    }
+
+    @Test
+    void givenRepeatedCustomer_whenCreatingCustomer_thenThrowsError() {
+        //given
+        String name = "Customer";
+        String cpf = "12345678901";
+        CustomerDTO customer = new CustomerDTO(name, cpf);
+        CustomerModel customerConflict = new CustomerModel(null, name, cpf);
+        customerRepository.save(customerConflict);
+
+        HttpEntity<CustomerDTO> body = new HttpEntity<>(customer);
+
+        //when
+        ResponseEntity<String> response = restTemplate.exchange(
+            "/customers",
+            HttpMethod.POST,
+            body,
+            String.class
+        );
+
+        //then
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+        assertEquals("A customer with this cpf already exists!", response.getBody());
+        assertEquals(1, customerRepository.count());
+    }
+
+    @Test
+    void givenValidCustomer_whenCreatingCustomer_thenCreatesCustomer() {
+        //given
+        String name = "Customer";
+        String cpf = "12345678901";
+        CustomerDTO customer = new CustomerDTO(name, cpf);
+
+        HttpEntity<CustomerDTO> body = new HttpEntity<>(customer);
+
+        //when
+        ResponseEntity<CustomerModel> response = restTemplate.exchange(
+            "/customers",
+            HttpMethod.POST,
+            body,
+            CustomerModel.class
+        );
+
+        //then
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(1, customerRepository.count());
     }
     

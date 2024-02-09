@@ -2,9 +2,11 @@ package com.boardcampapi.api.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class CustomerDTO {
 
     @NotBlank(message = "Field name cannot be null, empty or blank")
