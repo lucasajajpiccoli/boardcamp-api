@@ -24,7 +24,7 @@ Files ".env" and ".env.test" are already on ".gitignore".
 
 This API is deployed on Render:
 
-https://boardcamp-api-ee3g.onrender.com
+s://boardcamp-api-ee3g.onrender.com
 
 Last update was start of February 2024 and the contracted plan was free. So, by the date the reader may be reading, the deploy may be unavailable.
 
@@ -43,22 +43,22 @@ Following the text, there are the endpoints and examples of request and reponse.
 
 ##### Response
 
-```http
-  [
-    {
-        id: 1,
-        name: 'Banco Imobiliário',
-        image: 'http://',
-        stockTotal: 3,
-        pricePerDay: 1500
-    },
-    {
-        id: 2,
-        name: 'Detetive',
-        image: 'http://',
-        stockTotal: 1,
-        pricePerDay: 2500
-    },
+```
+[
+  {
+    id: 1,
+    name: 'Banco Imobiliário',
+    image: '://',
+    stockTotal: 3,
+    pricePerDay: 1500
+  },
+  {
+    id: 2,
+    name: 'Detetive',
+    image: '://',
+    stockTotal: 1,
+    pricePerDay: 2500
+  },
 ]
 ```
 
@@ -68,10 +68,10 @@ Following the text, there are the endpoints and examples of request and reponse.
 
 ##### Request
 
-```http
+```
 {
   name: 'Banco Imobiliário',
-  image: 'http://www.imagem.com.br/banco_imobiliario.jpg',
+  image: '://www.imagem.com.br/banco_imobiliario.jpg',
   stockTotal: 3,
   pricePerDay: 1500
 }
@@ -79,11 +79,11 @@ Following the text, there are the endpoints and examples of request and reponse.
 
 ##### Response
 
-```http
+```
 {
   id: 1,
   name: 'Banco Imobiliário',
-  image: 'http://www.imagem.com.br/banco_imobiliario.jpg',
+  image: '://www.imagem.com.br/banco_imobiliario.jpg',
   stockTotal: 3,
   pricePerDay: 1500
 }
@@ -102,7 +102,7 @@ Following the text, there are the endpoints and examples of request and reponse.
 
 ##### Response
 
-```http
+```
 {
   id: 1,
   name: 'João Alfredo',
@@ -120,7 +120,7 @@ Following the text, there are the endpoints and examples of request and reponse.
 
 ##### Request
 
-```http
+```
 {
   name: 'João Alfredo',
   cpf: '01234567890'
@@ -129,9 +129,9 @@ Following the text, there are the endpoints and examples of request and reponse.
 
 ##### Response
 
-```http
+```
 {
-	id: 1,
+  id: 1,
   name: 'João Alfredo',
   cpf: '01234567890'
 }
@@ -151,7 +151,7 @@ Following the text, there are the endpoints and examples of request and reponse.
 
 ##### Response
 
-```http
+```
 [
   {
     id: 1,
@@ -163,14 +163,14 @@ Following the text, there are the endpoints and examples of request and reponse.
     customer: {
       id: 1,
       name: 'João Alfredo',
-		  cpf: '01234567890'
+      cpf: '01234567890'
     },
     game: {
       id: 1,
-		  name: 'Banco Imobiliário',
-		  image: 'http://www.imagem.com.br/banco.jpg',
-		  stockTotal: 3,
-		  pricePerDay: 1500
+      name: 'Banco Imobiliário',
+      image: '://www.imagem.com.br/banco.jpg',
+      stockTotal: 3,
+      pricePerDay: 1500
     }
   }
 ]
@@ -182,7 +182,7 @@ Following the text, there are the endpoints and examples of request and reponse.
 
 ##### Request
 
-```http
+```
 {
   customerId: 1,
   gameId: 1,
@@ -192,7 +192,7 @@ Following the text, there are the endpoints and examples of request and reponse.
 
 ##### Response
 
-```http
+```
 {
   id: 1,
   rentDate: '2021-06-20',
@@ -208,9 +208,9 @@ Following the text, there are the endpoints and examples of request and reponse.
   game: {
     id: 1,
     name: 'Banco Imobiliário',
-  	image: 'http://www.imagem.com.br/banco.jpg',
-  	stockTotal: 3,
-  	pricePerDay: 1500
+    image: '://www.imagem.com.br/banco.jpg',
+    stockTotal: 3,
+    pricePerDay: 1500
   }
 }
 ````
@@ -230,7 +230,7 @@ Following the text, there are the endpoints and examples of request and reponse.
 
 ##### Response
 
-```http
+```
 {
   id: 1,
   rentDate: '2021-06-20',
@@ -246,12 +246,12 @@ Following the text, there are the endpoints and examples of request and reponse.
   game: {
     id: 1,
     name: 'Banco Imobiliário',
-    image: 'http://www.imagem.com.br/banco.jpg',
+    image: '://www.imagem.com.br/banco.jpg',
     stockTotal: 3,
     pricePerDay: 1500
   }
 }
-````
+```
 
 ##### Rules
 
