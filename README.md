@@ -24,7 +24,7 @@ Files ".env" and ".env.test" are already on ".gitignore".
 
 This API is deployed on Render:
 
-s://boardcamp-api-ee3g.onrender.com
+https://boardcamp-api-ee3g.onrender.com
 
 Last update was start of February 2024 and the contracted plan was free. So, by the date the reader may be reading, the deploy may be unavailable.
 
